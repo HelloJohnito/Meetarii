@@ -18865,7 +18865,7 @@ var eventbriteIndex = function (_React$Component) {
 			return _react2.default.createElement(
 				'div',
 				{ className: 'events-logo-container flex-container flex-vertical' },
-				_react2.default.createElement('img', { className: 'eventbrite-logo', src: '../../../app/assets/images/eventbrite.png', alt: 'eventbrite-logo' }),
+				_react2.default.createElement('img', { className: 'eventbrite-logo', src: 'eventbrite.png', alt: 'eventbrite-logo' }),
 				_react2.default.createElement(
 					'div',
 					{ className: 'events-index flex-container flex-vertical' },
@@ -19028,7 +19028,7 @@ var Meetup = function (_Component) {
       return _react2.default.createElement(
         'div',
         { className: 'events-logo-container flex-container flex-vertical' },
-        _react2.default.createElement('img', { className: 'meetup-logo', src: '../../../app/assets/images/meetup.png', alt: 'eventbrite-logo' }),
+        _react2.default.createElement('img', { className: 'meetup-logo', src: 'meetup.png', alt: 'eventbrite-logo' }),
         _react2.default.createElement(
           'div',
           { className: 'events-index flex-container flex-vertical', id: 'meetup-index' },

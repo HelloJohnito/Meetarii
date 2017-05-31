@@ -14,7 +14,7 @@ class Meetup extends Component{
     // let row = this.props.meetups.results.slice(0, 10);
     return(
       <div className="events-logo-container flex-container flex-vertical">
-        <img className="meetup-logo" src="../../../app/assets/images/meetup.png" alt="eventbrite-logo"/>
+        <img className="meetup-logo" src="meetup.png" alt="eventbrite-logo"/>
         <div className="events-index flex-container flex-vertical" id="meetup-index">
           <ul className="events-list">
             {this.props.meetups.map( (el, id) => (

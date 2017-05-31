@@ -19,7 +19,7 @@ class eventbriteIndex extends React.Component {
 
 		return (
 			<div className="events-logo-container flex-container flex-vertical">
-				<img className="eventbrite-logo" src="../../../app/assets/images/eventbrite.png" alt="eventbrite-logo"/>
+				<img className="eventbrite-logo" src="eventbrite.png" alt="eventbrite-logo"/>
 				<div className="events-index flex-container flex-vertical">
 					<ul className="events-list">
 						{this.props.events.map((event, idx) => {
