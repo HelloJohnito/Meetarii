@@ -19536,14 +19536,17 @@ var SearchIndex = function (_Component) {
     _this.handleSelect = _this.handleSelect.bind(_this);
     _this.handleStartDate = _this.handleStartDate.bind(_this);
     _this.handleEndDate = _this.handleEndDate.bind(_this);
+    _this.displaySearch = _this.displaySearch.bind(_this);
 
+    // this.display = true;
     _this.state = {
       input: "",
       city: "",
       startDate: null,
       endDate: null,
       zipcode: "",
-      radius: ""
+      radius: "",
+      display: false
     };
     return _this;
   }
@@ -19587,7 +19590,7 @@ var SearchIndex = function (_Component) {
       event.preventDefault();
       this.props.fetchEbEvents(this.state);
       this.props.fetchMeetups(this.state);
-      // this.setState({input: "", city: "", radius: "", startDate: null, endDate: null, zipcode: ""});
+      this.setState({ display: false });
     }
   }, {
     key: 'handleStartDate',
@@ -19608,6 +19611,15 @@ var SearchIndex = function (_Component) {
       });
     }
   }, {
+    key: 'displaySearch',
+    value: function displaySearch() {
+      if (this.state.display) {
+        this.setState({ display: false });
+      } else {
+        this.setState({ display: true });
+      }
+    }
+  }, {
     key: 'stringifyDate',
     value: function stringifyDate(date) {
       var splitDate = date.split("-");
@@ -19617,6 +19629,61 @@ var SearchIndex = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+
+      var form = void 0;
+      if (this.state.display) {
+        form = _react2.default.createElement(
+          'form',
+          { className: 'search-form', onSubmit: this.handleSubmit },
+          _react2.default.createElement('input', { className: 'search-input-text', onChange: this.handleInput, value: this.state.input, type: 'text', placeholder: 'Search here' }),
+          _react2.default.createElement('input', { className: 'search-input', onChange: this.handleCity, value: this.state.city, type: 'text', placeholder: 'City' }),
+          _react2.default.createElement('input', { className: 'search-input', onChange: this.handleZipcode, value: this.state.zipcode, type: 'number', placeholder: 'Zip Code' }),
+          _react2.default.createElement(
+            'select',
+            { className: 'search-input-radius', value: this.state.radius, onChange: this.handleSelect },
+            _react2.default.createElement(
+              'option',
+              { value: '', disabled: true },
+              'Select Radius'
+            ),
+            _react2.default.createElement(
+              'option',
+              { value: '5' },
+              '5 miles'
+            ),
+            _react2.default.createElement(
+              'option',
+              { value: '10' },
+              '10 miles'
+            ),
+            _react2.default.createElement(
+              'option',
+              { value: '25' },
+              '25 miles'
+            ),
+            _react2.default.createElement(
+              'option',
+              { value: '50' },
+              '50 miles'
+            )
+          ),
+          _react2.default.createElement(
+            'label',
+            { className: 'search-index-date-title' },
+            'Start Date: '
+          ),
+          _react2.default.createElement('input', { className: 'search-index-date', onChange: this.handleStartDate, type: 'date' }),
+          _react2.default.createElement(
+            'label',
+            { className: 'search-index-date-title' },
+            'End Date: '
+          ),
+          _react2.default.createElement('input', { className: 'search-index-date', onChange: this.handleEndDate, type: 'date' }),
+          _react2.default.createElement('input', { className: 'search-index-submit', onSubmit: this.handleSubmit, type: 'submit' })
+        );
+      } else {
+        form = _react2.default.createElement('span', null);
+      }
 
       return _react2.default.createElement(
         'div',
@@ -19647,59 +19714,17 @@ var SearchIndex = function (_Component) {
               _react2.default.createElement(
                 'h1',
                 { className: 'search-index-title' },
-                'Search for your event today!'
+                'Search for your event today click ',
+                _react2.default.createElement(
+                  'span',
+                  { className: 'search-index-display', onClick: this.displaySearch },
+                  'here'
+                ),
+                '!'
               )
             )
           ),
-          _react2.default.createElement(
-            'form',
-            { className: 'search-form', onSubmit: this.handleSubmit },
-            _react2.default.createElement('input', { className: 'search-input-text', onChange: this.handleInput, value: this.state.input, type: 'text', placeholder: 'Search here' }),
-            _react2.default.createElement('input', { className: 'search-input', onChange: this.handleCity, value: this.state.city, type: 'text', placeholder: 'City' }),
-            _react2.default.createElement('input', { className: 'search-input', onChange: this.handleZipcode, value: this.state.zipcode, type: 'number', placeholder: 'Zip Code' }),
-            _react2.default.createElement(
-              'select',
-              { className: 'search-input-radius', value: this.state.radius, onChange: this.handleSelect },
-              _react2.default.createElement(
-                'option',
-                { value: '', disabled: true },
-                'Select Radius'
-              ),
-              _react2.default.createElement(
-                'option',
-                { value: '5' },
-                '5 miles'
-              ),
-              _react2.default.createElement(
-                'option',
-                { value: '10' },
-                '10 miles'
-              ),
-              _react2.default.createElement(
-                'option',
-                { value: '25' },
-                '25 miles'
-              ),
-              _react2.default.createElement(
-                'option',
-                { value: '50' },
-                '50 miles'
-              )
-            ),
-            _react2.default.createElement(
-              'label',
-              { className: 'search-index-date-title' },
-              'Start Date: '
-            ),
-            _react2.default.createElement('input', { className: 'search-index-date', onChange: this.handleStartDate, type: 'date' }),
-            _react2.default.createElement(
-              'label',
-              { className: 'search-index-date-title' },
-              'End Date: '
-            ),
-            _react2.default.createElement('input', { className: 'search-index-date', onChange: this.handleEndDate, type: 'date' }),
-            _react2.default.createElement('input', { className: 'search-index-submit', onSubmit: this.handleSubmit, type: 'submit' })
-          )
+          form
         )
       );
     }

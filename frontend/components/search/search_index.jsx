@@ -13,16 +13,21 @@ class SearchIndex extends Component{
     this.handleSelect = this.handleSelect.bind(this);
     this.handleStartDate = this.handleStartDate.bind(this);
     this.handleEndDate = this.handleEndDate.bind(this);
+    this.displaySearch = this.displaySearch.bind(this);
 
+    // this.display = true;
     this.state = {
       input: "",
       city: "",
       startDate: null,
       endDate: null,
       zipcode: "",
-      radius: ""
+      radius: "",
+      display: false
     };
   }
+
+
 
   handleInput(e){
     e.preventDefault();
@@ -57,7 +62,7 @@ class SearchIndex extends Component{
     event.preventDefault();
     this.props.fetchEbEvents(this.state);
     this.props.fetchMeetups(this.state);
-    // this.setState({input: "", city: "", radius: "", startDate: null, endDate: null, zipcode: ""});
+    this.setState({display: false}); 
   }
 
   handleStartDate(event){
@@ -76,6 +81,14 @@ class SearchIndex extends Component{
     });
   }
 
+  displaySearch(){
+    if(this.state.display){
+      this.setState({display: false});
+    } else {
+      this.setState({display: true});
+    }
+  }
+
   stringifyDate(date){
     let splitDate = date.split("-");
     splitDate[1] = parseInt(splitDate[1]).toString();
@@ -83,6 +96,31 @@ class SearchIndex extends Component{
   }
 
   render(){
+
+    let form;
+    if(this.state.display){
+      form = <form className="search-form" onSubmit={this.handleSubmit}>
+        <input className="search-input-text" onChange={this.handleInput} value={this.state.input} type="text" placeholder="Search here"/>
+        <input className="search-input" onChange={this.handleCity} value={this.state.city} type="text" placeholder="City" />
+        <input className="search-input" onChange={this.handleZipcode} value={this.state.zipcode} type="number" placeholder="Zip Code"/>
+        <select className="search-input-radius" value={this.state.radius} onChange={this.handleSelect}>
+          <option value="" disabled>Select Radius</option>
+          <option value='5'>5 miles</option>
+          <option value='10'>10 miles</option>
+          <option value='25'>25 miles</option>
+          <option value='50'>50 miles</option>
+        </select>
+
+        <label className="search-index-date-title">Start Date: </label>
+          <input className="search-index-date" onChange={this.handleStartDate} type="date" />
+        <label className="search-index-date-title">End Date: </label>
+        <input className="search-index-date" onChange={this.handleEndDate} type="date" />
+        <input className="search-index-submit" onSubmit={this.handleSubmit} type="submit"/>
+
+      </form>;
+    } else {
+      form = <span></span>;
+    }
 
     return(
       <div className="search-index">
@@ -93,29 +131,10 @@ class SearchIndex extends Component{
               <h4 className="logo-meetarii">MEETARII</h4>
             </div>
             <div className="search-index-title-container">
-              <h1 className="search-index-title">Search for your event today!</h1>
+              <h1 className="search-index-title">Search for your event today click <span className="search-index-display" onClick={this.displaySearch}>here</span>!</h1>
             </div>
           </div>
-          <form className="search-form" onSubmit={this.handleSubmit}>
-
-            <input className="search-input-text" onChange={this.handleInput} value={this.state.input} type="text" placeholder="Search here"/>
-            <input className="search-input" onChange={this.handleCity} value={this.state.city} type="text" placeholder="City" />
-            <input className="search-input" onChange={this.handleZipcode} value={this.state.zipcode} type="number" placeholder="Zip Code"/>
-            <select className="search-input-radius" value={this.state.radius} onChange={this.handleSelect}>
-              <option value="" disabled>Select Radius</option>
-              <option value='5'>5 miles</option>
-              <option value='10'>10 miles</option>
-              <option value='25'>25 miles</option>
-              <option value='50'>50 miles</option>
-            </select>
-
-            <label className="search-index-date-title">Start Date: </label>
-              <input className="search-index-date" onChange={this.handleStartDate} type="date" />
-            <label className="search-index-date-title">End Date: </label>
-            <input className="search-index-date" onChange={this.handleEndDate} type="date" />
-            <input className="search-index-submit" onSubmit={this.handleSubmit} type="submit"/>
-
-          </form>
+          {form}
         </div>
       </div>
     );
